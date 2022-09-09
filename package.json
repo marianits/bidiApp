@@ -1,0 +1,20 @@
+{
+  "name": "bidi-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.10.2",
+    "dotenv": "^16.0.2",
+    "mongoose": "^6.5.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
