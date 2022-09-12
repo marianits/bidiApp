@@ -1,7 +1,7 @@
-export default function HomePage() {
-    return (
-      <>
-        <h1>Testing react</h1>
-      </>
-    )
-  }
+function Homepage() {
+  return (
+    <h1>Esta es la pagina de inicio!</h1>
+  )
+}
+
+export default Homepage;
