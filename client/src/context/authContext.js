@@ -10,7 +10,7 @@ if(localStorage.getItem("token")){
   if (decodedToken.exp * 1000 < Date.now()) {
     localStorage.removeItem("token")
   }else {
-    initialState.usuario = docodedToken;
+    initialState.usuario = decodedToken;
   }
 }
 
@@ -62,7 +62,3 @@ function AuthProvider(props) {
 }
 
 export { AuthContext, AuthProvider }
-
-
-//https://www.youtube.com/watch?v=0Z68AHS011Y&ab_channel=CooperCodes
-//23:30

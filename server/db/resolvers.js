@@ -1,3 +1,5 @@
+const { ApolloError } = require('apollo-server-errors');
+
 const Usuario = require('../Models/Usuario');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -5,8 +7,8 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config({path:'variables.env'});
 
 const crearToken = (usuario, firma_secreta, expiresIn) => {
-    const {id, email, nombre, apellido} = usuario;
-    return jwt.sign({id, email, nombre, apellido}, firma_secreta, {expiresIn});
+    const {id, email} = usuario;
+    return jwt.sign({id, email}, firma_secreta, {expiresIn});
 }
 //resolvers
 const resolvers = {
@@ -19,22 +21,26 @@ const resolvers = {
     },
     Mutation: {
         nuevoUsuario: async (_,{ input } ) => {
-            console.log(input);
             const { email, password } = input;
 
             //Revisar si el Usuario está registrado
             const existeUsuario = await Usuario.findOne({email});
             if(existeUsuario){
-                throw new Error(`El usuario con ese correo ${email} ya fue registrado`)
+                throw new ApolloError(`El usuario con ese correo ${email} ya fue registrado`)
             }
 
             //Hashear Password
             const salt = await bcryptjs.genSaltSync(10);
             input.password = await bcryptjs.hash(password, salt);
 
+            const usuario = new Usuario(input);
+            console.log(usuario._id);
+            //Crear token
+            const token = crearToken({ id: usuario._id, email, }, process.env.FIRMA_SECRETA,300000)
+            usuario.token = token
+
             //Guardarlo en la Base de Datos
             try {
-                const usuario = new Usuario(input);
                 await usuario.save();
                 return usuario;
             } catch (error){
@@ -43,22 +49,24 @@ const resolvers = {
             return "Usuario Creado....";
         },
         autenticarUsuario: async (_,{input} ) => {
-            console.log(input);
             const {email, password} = input;
             //Verificar si el usuario existe
             const existeUsuario = await Usuario.findOne({email});
-            console.log("Existe el Usuario sus datos: ", existeUsuario);
             if (!existeUsuario){
-                throw new Error(`El usuario con ese email ${email} no existe.`);
+                throw new ApolloError(`El usuario con ese email ${email} no existe.`);
             }
             //Revisar si el password es correcto
             const passwordCorrecto = await bcryptjs.compare(password, existeUsuario.password);
             if (!passwordCorrecto){
-                throw new Error('El password es incorrecto!');
+                throw new ApolloError('El password es incorrecto!');
             }
-            //Crear el Token
+
+           //Crear token
+            existeUsuario.token = crearToken(existeUsuario, process.env.FIRMA_SECRETA,300000);
+
             return {
-                token:crearToken(existeUsuario, process.env.FIRMA_SECRETA,300000)
+             id: existeUsuario.id,
+             ...existeUsuario._doc
             }
         }
     }
