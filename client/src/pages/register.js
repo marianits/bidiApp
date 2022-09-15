@@ -50,8 +50,9 @@ function Register(props) {
 
   return (
     <Container spacing={2} maxWidth="sm">
-      <h3>Registro</h3>
-      <p>Esta es la pagina de registro</p>
+      <h3 style={{marginBottom: "5px"}}>Registro</h3>
+      <p>Ingrese sus datos:</p>
+      <br></br>
       <Stack spacing={2} paddingBottom={2}>
         <TextField 
           label="Nombre:"
