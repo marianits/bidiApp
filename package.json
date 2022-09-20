@@ -1,22 +1,5 @@
 {
-  "name": "bidi-app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node .",
-    "dev": "nodemon ."
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "apollo-server": "^3.10.2",
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^16.0.2",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.5.5"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.19"
+    "@mui/icons-material": "^5.10.3"
   }
 }

@@ -25,6 +25,9 @@ const UsuarioSchema = mongoose.Schema({
     creado: {
         type: Date,
         default: Date.now()
+    },
+    token: {
+        type: String
     }
 });
 
