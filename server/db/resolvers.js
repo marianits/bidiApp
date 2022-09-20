@@ -21,8 +21,8 @@ const resolvers = {
     },
     Mutation: {
         nuevoUsuario: async (_,{ input } ) => {
+            console.log(input);
             const { email, password } = input;
-
             //Revisar si el Usuario está registrado
             const existeUsuario = await Usuario.findOne({email});
             if(existeUsuario){
