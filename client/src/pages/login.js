@@ -1,9 +1,9 @@
-import { useContext, useState }from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../context/authContext'
 import { useForm } from '../utils/hooks'
 import { useMutation } from '@apollo/react-hooks'
-
-import { TextField, Button, Container, Stack, Alert } from "@mui/material"
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { TextField, Button, Container, Avatar, CssBaseline, Box, Typography, Alert } from "@mui/material"
 
 import { gql } from 'graphql-tag'
 import { useNavigate } from 'react-router-dom'
@@ -46,30 +46,62 @@ function Login(props){
   });
 
   return (
-    <Container spacing={2} maxWidth="sm">
-      <h3 style={{marginBottom: "5px"}}>Login:</h3>
-      <p>Ingrese sus datos:</p>
-      <br></br>
-      <Stack spacing={2} paddingBottom={2}>
-        <TextField 
-          label="Email:"
-          name="email"
-          onChange={onChange}
-        />
-        <TextField 
-          label="Password:"
-          name="password"
-          onChange={onChange}
-        />
-      </Stack>
-      {errors.map(function(error){
-        return (
-          <Alert severity="error">
-            {error.message}
-          </Alert>
-        );
-      })}
-      <Button variant="contained" onClick={onSubmit}>Login</Button>
+    <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box component="form" sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={onChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              onChange={onChange}
+            />
+            {errors.map(function(error){
+              return (
+                <Alert severity="error">
+                  {error.message}
+                </Alert>
+              );
+            })}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={onSubmit}
+            >
+              Sign In
+            </Button>
+          </Box>
+        </Box>
     </Container>
   );
 }

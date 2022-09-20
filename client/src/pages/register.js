@@ -11,9 +11,7 @@ import { Avatar,
   Grid,
   Box,
   Typography,
-  CssBaseline,
-  Container,
-  Stack
+  CssBaseline
 } from "@mui/material";
 import { gql } from 'graphql-tag';
 import { useNavigate } from 'react-router-dom';
@@ -84,7 +82,7 @@ function Register(props) {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign up
+              Registro
             </Typography>
             <Box sx={{ mt: 3 }}>
               <Grid container spacing={2}>
