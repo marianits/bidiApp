@@ -9,8 +9,17 @@ const typeDefs = gql `
         creado: String
         token: String
     }
+    type Categoria {
+        id: ID
+        nombre: String
+        descripcion: String
+    }
     type Token {
         token: String
+    }
+    input inputCategoria {
+        nombre: String!
+        descripcion: String
     }
     input inputUsuario {
         nombre: String
@@ -25,10 +34,15 @@ const typeDefs = gql `
     }
     type Query {
         obtenerUsuario(token: String): Usuario
+        #Productos
+        obtenerCategoria: [Categoria]
     }    
     type Mutation {
+        #usuarios
         nuevoUsuario(input: inputUsuario): Usuario
         autenticarUsuario(input: inputAutenticar): Usuario
+        #categorias
+        nuevaCategoria(input: inputCategoria): Categoria
     }
 `;
 

@@ -1,6 +1,7 @@
 const { ApolloError } = require('apollo-server-errors');
 
 const Usuario = require('../Models/Usuario');
+const Categoria = require('../Models/Categoria');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -17,7 +18,15 @@ const resolvers = {
         //returns all the object (user)
           const usuarioId = await jwt.verify(token, process.env.FIRMA_SECRETA);
           return usuarioId;
-        }
+      },
+      obtenerCategoria: async () => {
+          try {
+            const categorias = await Categoria.find({});
+            return categorias;
+          } catch (error){
+            console.log(error);
+          }
+       }
     },
     Mutation: {
         nuevoUsuario: async (_,{ input } ) => {
@@ -68,8 +77,18 @@ const resolvers = {
              id: existeUsuario.id,
              ...existeUsuario._doc
             }
+        },
+        nuevaCategoria: async (_, { input })=> {
+            try {
+                const categoria = new Categoria(input);
+                //Grabar en la Base de Datos
+                const  resultado = await categoria.save();
+                return resultado;
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
-
 }
+
 module.exports = resolvers;
