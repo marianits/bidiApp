@@ -13,9 +13,22 @@ const typeDefs = gql `
         id: ID
         nombre: String
         descripcion: String
-    }
+    },
+    type Autor {
+        id: ID
+        nombre: String
+        apellidos: String
+        email: String
+        biografia: String
+    },
     type Token {
         token: String
+    },
+    input inputAutor {
+        nombre: String
+        apellidos: String
+        email: String
+        biografia: String
     }
     input inputCategoria {
         nombre: String!
@@ -25,7 +38,7 @@ const typeDefs = gql `
         nombre: String
         apellido: String
         email: String
-        password: String,
+        password: String
         confirmPassword: String
     }
     input inputAutenticar {
@@ -36,6 +49,7 @@ const typeDefs = gql `
         obtenerUsuario(token: String): Usuario
         #Productos
         obtenerCategoria: [Categoria]
+        obtenerAutor: [Autor]
     }    
     type Mutation {
         #usuarios
@@ -43,6 +57,8 @@ const typeDefs = gql `
         autenticarUsuario(input: inputAutenticar): Usuario
         #categorias
         nuevaCategoria(input: inputCategoria): Categoria
+        #autores
+        nuevoAutor(input: inputAutor): Autor
     }
 `;
 
