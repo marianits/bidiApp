@@ -1,6 +1,8 @@
 const { ApolloError } = require('apollo-server-errors');
 
+const Autor = require('../Models/Autor');
 const Usuario = require('../Models/Usuario');
+const Categoria = require('../Models/Categoria');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -17,7 +19,23 @@ const resolvers = {
         //returns all the object (user)
           const usuarioId = await jwt.verify(token, process.env.FIRMA_SECRETA);
           return usuarioId;
+      },
+      obtenerAutor: async () => {
+        try {
+          const autores = await Autor.find({});
+          return autores;
+        } catch (error){
+          console.log(error);
         }
+      },
+      obtenerCategoria: async () => {
+          try {
+            const categorias = await Categoria.find({});
+            return categorias;
+          } catch (error){
+            console.log(error);
+          }
+      }
     },
     Mutation: {
         nuevoUsuario: async (_,{ input } ) => {
@@ -37,7 +55,7 @@ const resolvers = {
             console.log(usuario._id);
             //Crear token
             const token = crearToken({ id: usuario._id, email, }, process.env.FIRMA_SECRETA,300000)
-            usuario.token = token
+            usuario.token = token;
 
             //Guardarlo en la Base de Datos
             try {
@@ -68,8 +86,28 @@ const resolvers = {
              id: existeUsuario.id,
              ...existeUsuario._doc
             }
+        },
+        nuevoAutor: async (_, { input })=> {
+            try {
+                const autor = new Autor(input);
+                //Grabar en la Base de Datos
+                const  resultado = await autor.save();
+                return resultado;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        nuevaCategoria: async (_, { input })=> {
+            try {
+                const categoria = new Categoria(input);
+                //Grabar en la Base de Datos
+                const  resultado = await categoria.save();
+                return resultado;
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
-
 }
+
 module.exports = resolvers;
