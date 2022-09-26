@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/authContext'
 import { useNavigate } from 'react-router-dom';
+import Sidebar from './sidebar';
+
 
 function Navbar() {
   let navigate = useNavigate();
@@ -13,10 +15,12 @@ function Navbar() {
     navigate('/');
   }
   console.log(usuario);
+  
   return(
     <Box sx={{flexGrow: 1}}>
       <AppBar position="static">
         <Toolbar>
+          <Sidebar />
           <Typography variant='h5' component="div">
             <Link to="/" style={{textDecoration: "none", color: "white"}}>BidiApp</Link>
           </Typography>
