@@ -3,7 +3,7 @@ import { AuthContext } from '../context/authContext'
 import { useForm } from '../utils/hooks'
 import { useMutation } from '@apollo/react-hooks'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { TextField, Button, Container, Avatar, CssBaseline, Box, Typography, Alert } from "@mui/material"
+import { TextField, Button, Container, Avatar, CssBaseline, Box, Typography, Alert } from "@mui/material";
 
 import { gql } from 'graphql-tag'
 import { useNavigate } from 'react-router-dom'

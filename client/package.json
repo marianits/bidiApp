@@ -30,6 +30,7 @@
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.5",
+    "@mui/x-data-grid": "^5.17.4",
     "apollo-boost": "^0.4.9",
     "formik": "^2.2.9",
     "graphql-tag": "^2.12.6",
