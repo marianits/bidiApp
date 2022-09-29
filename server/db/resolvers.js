@@ -28,13 +28,21 @@ const resolvers = {
           console.log(error);
         }
       },
-      obtenerCategoria: async () => {
+      obtenerCategorias: async () => {
           try {
             const categorias = await Categoria.find({});
             return categorias;
           } catch (error){
             console.log(error);
           }
+      },
+      obtenerCategoriaPorID: async (_, { id })=>{
+        //Verificar que la categoria existe
+        const categoria = await Categoria.findById(id);
+        if(!categoria){
+            throw new Error(`La categoria con ese ID: ${id},  no existe.`);
+        }
+        return categoria;
       }
     },
     Mutation: {
@@ -97,6 +105,7 @@ const resolvers = {
                 console.log(error);
             }
         },
+        //Categorias
         nuevaCategoria: async (_, { input })=> {
             try {
                 const categoria = new Categoria(input);
@@ -106,7 +115,19 @@ const resolvers = {
             } catch (error) {
                 console.log(error);
             }
+        },
+        editarCategoria: async (_, { id, input }) => {
+            //Verificar que la categoria existe.
+            let categoria = await Categoria.findById(id);
+            if(!categoria){
+                throw new Error(`La categoria con ese ID: ${id}, no existe.`);
+            }
+            //Guardarlo en la Base de Datos
+            categoria = await Categoria.findOneAndUpdate({_id: id},input,{new: true});
+
+            return categoria;
         }
+
     }
 }
 

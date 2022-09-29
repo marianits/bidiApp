@@ -8,9 +8,9 @@ import { TextField, Button, Container, Avatar, CssBaseline, Box, Typography, Ale
 import StyleIcon from '@mui/icons-material/Style';
 import NewCategoriaModal from './newCategoriaModal';
 
-const OBTENER_CATEGORIA = gql`
-  query obtenerCategoria {
-    obtenerCategoria {
+const OBTENER_CATEGORIAS = gql`
+  query obtenerCategorias {
+    obtenerCategorias {
       id
       nombre
       descripcion
@@ -18,32 +18,40 @@ const OBTENER_CATEGORIA = gql`
   }
 `;
 
-//Configuracion de las columnas de la tabla
-const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'nombre', headerName: 'Nombre', width: 130 },
-  { field: 'descripcion', headerName: 'Descripcion', width: 130 },
-  { field: 'acciones',
-    type: 'actions',
-    headerName: 'Acciones',
-    width: 150,
-    getActions: (params) => [
-      <GridActionsCellItem
-        icon={<DeleteIcon />}
-        label="Eliminar"
-      />,
-      <GridActionsCellItem
-        icon={<EditIcon />}
-        label="Editar"
-      />,
-    ]
-  }
-];
-
 function Categorias() {
+  
+  const deleteUser = React.useCallback(
+    (id) => () => {
+      console.log(id);
+    },
+    [],
+  );
+  //Configuracion de las columnas de la tabla
+  const columns = React.useMemo( () => [
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'nombre', headerName: 'Nombre', width: 130 },
+    { field: 'descripcion', headerName: 'Descripcion', width: 130 },
+    { field: 'acciones',
+      type: 'actions',
+      headerName: 'Acciones',
+      width: 150,
+      getActions: (params) => [
+        <GridActionsCellItem
+          icon={<DeleteIcon />}
+          label="Eliminar"
+        />,
+        <GridActionsCellItem
+          icon={<EditIcon />}
+          label="Editar"
+          onClick={deleteUser(params.id)}
+        />,
+      ]
+    }
+  ], [deleteUser])
+
   const [open, setOpen] = useState(false);
 
-  const { loading, error, data } = useQuery(OBTENER_CATEGORIA);
+  const { loading, error, data } = useQuery(OBTENER_CATEGORIAS);
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 
@@ -72,7 +80,7 @@ function Categorias() {
           <NewCategoriaModal show={open} close={() => setOpen(false)}/>
           <div style={{ height: 400, width: '100%' }}>
             <DataGrid
-              rows={data.obtenerCategoria}
+              rows={data.obtenerCategorias}
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}
