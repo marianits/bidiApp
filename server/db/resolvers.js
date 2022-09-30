@@ -126,6 +126,16 @@ const resolvers = {
             categoria = await Categoria.findOneAndUpdate({_id: id},input,{new: true});
 
             return categoria;
+        },
+        eliminarCategoria: async (_, { id } ) => {
+            //Verificar que el categoria existe
+            let categoria = await Categoria.findById(id);
+            if(!categoria){
+                throw new Error(`El categoria con ese ID: ${id},  no existe.`);
+            }
+            //Eliminarlo de la Base de Datos
+            await  Categoria.findOneAndDelete({_id: id});
+            return 'Categoria eliminada!!!'
         }
 
     }

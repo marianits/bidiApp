@@ -59,6 +59,7 @@ const typeDefs = gql `
         #Categorias
         nuevaCategoria(input: inputCategoria): Categoria
         editarCategoria(id: ID!, input: inputCategoria): Categoria
+        eliminarCategoria (id: ID!): String
         #Autores
         nuevoAutor(input: inputAutor): Autor
     }

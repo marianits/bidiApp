@@ -43,9 +43,9 @@ function NewCategoriaModal(props) {
               descripcion: '',
             }}
             onSubmit={async (values) => {
-              console.log(values);
               nuevaCategoria({variables: {input: values}});
-              {props.close};
+              props.close();
+              props.refetch();
             }}
             validationSchema={object({
               nombre: string().required("El nombre de la categoria es requerido").min(2, "Nombre muy pequeño"),
