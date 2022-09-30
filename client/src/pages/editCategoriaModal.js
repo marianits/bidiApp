@@ -40,17 +40,13 @@ mutation Mutation(
 
 function EditCategoriaModal(props) {
 
-  if(!props.categoriaId) {
-    return;
-  }
   const [ editarCategoria ] = useMutation(EDITAR_CATEGORIA);
 
-  const { error, loading , data, refetch } = useQuery(OBTENER_CATEGORIA, {
+  const { loading , data, refetch } = useQuery(OBTENER_CATEGORIA, {
     variables: {obtenerCategoriaPorIdId: props.categoriaId}
   });
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
-  refetch();
+  if (loading) return 'Cargando...';
+  setTimeout(refetch, 100);
     return (
         <Dialog open={props.show} onClose={props.close}>
           <DialogTitle>Editar Categoria:</DialogTitle>
@@ -72,7 +68,7 @@ function EditCategoriaModal(props) {
                   nombre: string().required("El nombre de la categoria es requerido").min(2, "Nombre muy pequeño"),
                 })}
               >
-                {({errors, isValid, touched, dirty}) => (
+                {({ errors, isValid, touched }) => (
                   <Form>
                     <Grid item xs={12}>
                       <Field 

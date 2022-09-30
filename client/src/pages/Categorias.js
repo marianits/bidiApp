@@ -86,7 +86,7 @@ function Categorias() {
           close={() => setOpenEdit(false)}
           categoriaId={categoriaId}
           refetch={() => refetch()}
-        ></EditCategoriaModal>    
+        ></EditCategoriaModal>   
         <Paper className={classes.paper}>
           <Box display="flex">
             <Box flexGrow={1}>
