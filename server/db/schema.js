@@ -47,17 +47,20 @@ const typeDefs = gql `
     }
     type Query {
         obtenerUsuario(token: String): Usuario
-        #Productos
-        obtenerCategoria: [Categoria]
+        #Categorias
+        obtenerCategorias: [Categoria]
         obtenerAutor: [Autor]
+        obtenerCategoriaPorID(id: ID!): Categoria
     }    
     type Mutation {
-        #usuarios
+        #Usuarios
         nuevoUsuario(input: inputUsuario): Usuario
         autenticarUsuario(input: inputAutenticar): Usuario
-        #categorias
+        #Categorias
         nuevaCategoria(input: inputCategoria): Categoria
-        #autores
+        editarCategoria(id: ID!, input: inputCategoria): Categoria
+        eliminarCategoria (id: ID!): String
+        #Autores
         nuevoAutor(input: inputAutor): Autor
     }
 `;
